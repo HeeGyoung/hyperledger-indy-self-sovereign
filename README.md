@@ -84,6 +84,49 @@ npm run dev
 ```
 Swagger UI: http://0.0.0.0:9999/api/docs
 
+### how to issue a credential
+Using swagger UI...
+1. Create credential: `POST /create/credential`
+```
+{
+  "credentialId": "PQ5gcrPJcmsRwcHugrf5pV:3:CL:7:default",
+  "credentialName": "driver_licence",
+  "version": "1.0",
+  "schemaId": "PQ5gcrPJcmsRwcHugrf5pV:2:driver_licence:1.0",
+  "attributes": [
+    "name",
+    "issuedNumber",
+    "type"
+  ],
+  "_id": "6466785ecef93846a6f71165",
+  "__v": 0
+}
+```
+2. Send credential to enduser: `POST /send/credential`  
+You can see EndUserAgent web logs..
+```
+[1] Credential for credential id a517a5b6-9c41-4c01-beb6-fc6386b030de is accepted
+[1] Credential is...
+[1] [
+[1]   CredentialPreviewAttribute {
+[1]     mimeType: 'text/plain',
+[1]     name: 'name',
+[1]     value: 'Alice'
+[1]   },
+[1]   CredentialPreviewAttribute {
+[1]     mimeType: 'text/plain',
+[1]     name: 'issuedNumber',
+[1]     value: 'IssuedNumber123456789'
+[1]   },
+[1]   CredentialPreviewAttribute {
+[1]     mimeType: 'text/plain',
+[1]     name: 'type',
+[1]     value: 'G1'
+[1]   }
+[1] ]
+```
+
+
 ### how to build local aries cloudagent
 If you want more APIs we could use with Aries, please check Aries cloud-agent.
 ```
