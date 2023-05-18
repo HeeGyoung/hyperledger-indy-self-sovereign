@@ -1,0 +1,10 @@
+von-network
+von-network/*
+
+IssuerAgent/node_modules/*
+IssuerAgent/dist/*
+
+EndUserAgent/node_modules/*
+EndUserAgent/dist/*
+
+.idea/*

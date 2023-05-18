@@ -1,0 +1,20 @@
+version: "2"
+services:
+  enduser-backend:
+    container_name: enduser-backend
+    build:
+      context: .
+    user: "node"
+    working_dir: /backend
+    restart: always
+    environment:
+      - NODE_ENV=dev
+    volumes:
+      - ./:/backend
+    ports:
+      - 9999:9999
+    networks:
+      - von
+    entrypoint: "./entrypoint.sh"
+networks:
+  von:

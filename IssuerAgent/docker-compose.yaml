@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  issuer-db:
+    container_name: issuer-db
+    image: mongo
+    restart: always
+    env_file:
+      - .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${DB_DATABASE}
+      MONGO_INITDB_USER: ${DB_USER}
+      MONGO_INITDB_PWD: ${DB_PASSWORD}
+    ports:
+      - 27017:27017
+    volumes:
+      - ./initdb.d/:/docker-entrypoint-initdb.d/
+      - issuer-db-data:/data/db
+
+volumes:
+  issuer-db-data:

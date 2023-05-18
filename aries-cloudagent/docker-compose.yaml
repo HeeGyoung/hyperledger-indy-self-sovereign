@@ -1,0 +1,48 @@
+version: '3.8'
+
+volumes:
+  aries-postgres:
+  aries-cloudagent:
+
+networks:
+  cloudagent-network:
+
+services:
+  aries-postgres:
+    container_name: aries-postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: testpass
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    networks:
+      - cloudagent-network
+
+  aries-cloudagent:
+    container_name: aries-cloudagent
+    image: bcgovimages/aries-cloudagent:py36-1.16-1_0.8.1
+    ports:
+      - 8000:8000
+      - 8030:8030
+    command: >
+      start --log-level debug --endpoint http://0.0.0.0:8000
+      --genesis-url http://host.docker.internal:9000/genesis
+      --wallet-storage-type postgres_storage
+      --wallet-storage-config "{\"url\":\"host.docker.internal:5432\"}"
+      --wallet-storage-creds "{\"account\":\"postgres\",\"password\":\"testpass\",\"admin_account\":\"postgres\",\"admin_password\":\"testpass\"}"
+      --admin 0.0.0.0 8030 --admin-insecure-mode
+      --auto-respond-messages --auto-ping-connection --auto-store-credential
+      --auto-accept-requests --public-invites --preserve-exchange-records
+      --inbound-transport http 0.0.0.0 8000 --outbound-transport http
+      --label MyAgent 
+      --wallet-type indy 
+      --wallet-key wallet_key_length_has_to_be_32__
+      --seed WqLmDo/f2+MUamWoUXYLReswFBe8oPe6
+      --wallet-name issuer_wallet
+      --auto-provision
+    depends_on:
+      - aries-postgres
+    networks:
+      - cloudagent-network
