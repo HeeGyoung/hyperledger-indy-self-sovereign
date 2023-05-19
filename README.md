@@ -85,6 +85,8 @@ npm run dev
 Swagger UI: http://0.0.0.0:9999/api/docs
 
 ### how to issue a credential
+> If you see PoolLedgerTimeout, add `127.0.0.1 host.docker.internal` into the host file.
+
 Using swagger UI...
 1. Create credential: `POST /create/credential`
 ```
